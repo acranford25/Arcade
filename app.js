@@ -1,11 +1,23 @@
-const ticTacToe = {
+let ticTacToe = {
     board: [
         [null, null, null],
         [null, null, null],
         [null, null, null]
     ],
-
     
+    playerOne: {
+        name: undefined,
+        score: 0,
+        char: 'X'
+    },
+
+    playerTwo: {
+        name: undefined,
+        score: 0,
+        char: '0'
+    },
+
+    player_turn: 0
 }
 
 const squares = document.getElementsByClassName("cell")
@@ -19,24 +31,34 @@ const player2 = document.querySelector("#player2_name")
 
 const board = document.querySelector("#board")
 
-let counter = 0
 let x = 0
 let y = 0
+
+//haven't made clickEvent or button yet
+function startNewGame(event) {
+    event.preventDefault()
+    if (ticTacToe.playerOne.name && ticTacToe.playerTwo.name){
+        ticTacToe.player_turn = 0
+    }
+    else {
+        window.alert("Must submit player names to play game. To play vs computer submit player2 as empty.")
+    }
+}
 
 function playGame(clickEvent) {
     if (clickEvent.target.matches('.cell')){
         x = clickEvent.target.id[0]
         y = clickEvent.target.id[1]
     
-        if (clickEvent.target.matches('.cell') && (counter % 2 === 0) && (ticTacToe.board[x][y]===null)){
+        if (clickEvent.target.matches('.cell') && (ticTacToe.player_turn % 2 === 0) && (ticTacToe.board[x][y]===null)){
             clickEvent.target.innerText = 'X'
             ticTacToe.board[x][y]='X'
-            counter++
+            ticTacToe.player_turn++
         }
-        if (clickEvent.target.matches(".cell") && (counter % 2 !== 0) && (ticTacToe.board[x][y]===null)){
+        if (clickEvent.target.matches(".cell") && (ticTacToe.player_turn % 2 !== 0) && (ticTacToe.board[x][y]===null)){
             clickEvent.target.innerText = '0'
             ticTacToe.board[x][y]='0'
-            counter++
+            ticTacToe.player_turn++
         }
     }
     return ticTacToe.board
@@ -78,46 +100,22 @@ function getAxis(clickEvent){
 }
 */
 
-/*
-const ticTacToe = {
-    board: [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null]
-    ],
-    move: function(char, row, col){
-      if (this.board[row][col]===null){
-      this.board[row][col]=char
-      }
-      return this.board
-    },
-    clear: function(){
-      this.board = [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null]
-    ]
-      return this.board
-    }
-}
-*/
-
-
-
-
 
 function addPlayer1(event) {
     event.preventDefault();
     player1.innerText = player1Input.value
+    ticTacToe.playerOne.name = player1Input.value
 }
 
 function addPlayer2(event) {
     event.preventDefault();
     if (!player2Input.value){
         player2.innerText = 'CPU'
+        ticTacToe.playerTwo.name = 'CPU'
     }
     else {
         player2.innerText = player2Input.value
+        ticTacToe.playerTwo.name = player2Input.value
     }
 }
 
