@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <header id="player_name">
+        <form id="player1_submit" class="players" action="/submit">
+            <input id="player1_input" type="text" name="name" placeholder="player1">
+            <button type="submit"><i id="player1" class="player">submit</i></button>
+        </form>
+        <form id="player2_submit" class="players" action="/submit">
+            <input id="player2_input" type="text" name="name" placeholder="player2">
+            <button type="submit"><i id="player2" class="player">submit</i></button>
+        </form>
+    </header>
+    <section>
+        <div id="board">
+            <div class="cell" id="00"></div>
+            <div class="cell" id="01"></div>
+            <div class="cell" id="02"></div>
+            <div class="cell" id="10"></div>
+            <div class="cell" id="11"></div>
+            <div class="cell" id="12"></div>
+            <div class="cell" id="20"></div>
+            <div class="cell" id="21"></div>
+            <div class="cell" id="22"></div>
+        </div>
+    </section>
+    <section id="scoreboard">
+        <div class="player_score">
+            <h1 id="player1_name">Player1</h1>
+            <h1 id="score1">Score:</h1>
+            <h1 id="score1Num">0</h1>
+        </div>
+        <div class="player_score">
+            <h1 id="player2_name">Player2</h1>
+            <h1 id="score2">Score:</h1>
+            <h1 id="score2Num">0</h1>
+        </div>
+    </section>
+</body>
+</html>
