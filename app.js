@@ -17,10 +17,10 @@ let ticTacToe = {
         char: '0'
     },
 
-    player_turn: 0
+    player_turn: null
 }
 
-const squares = document.getElementsByClassName("cell")
+const squares = document.querySelectorAll(".cell")
 const scoreBoard = document.querySelector("#scoreboard")
 const player1Submit = document.querySelector("#player1_submit")
 const player1Input = document.querySelector("#player1_input")
@@ -28,21 +28,33 @@ const player1 = document.querySelector("#player1_name")
 const player2Submit = document.querySelector("#player2_submit")
 const player2Input = document.querySelector("#player2_input")
 const player2 = document.querySelector("#player2_name")
+const newGame = document.querySelector("#new_game")
 
 const board = document.querySelector("#board")
 
 let x = 0
 let y = 0
 
-//haven't made clickEvent or button yet
+function resetBoard(){
+    for (i=0; i<squares.length;i++){
+        squares[i].innerText = ''
+    }
+}
+
 function startNewGame(event) {
     event.preventDefault()
+    resetBoard()
     if (ticTacToe.playerOne.name && ticTacToe.playerTwo.name){
-        ticTacToe.player_turn = 0
+        ticTacToe.player_turn = 2
     }
     else {
         window.alert("Must submit player names to play game. To play vs computer submit player2 as empty.")
     }
+    return ticTacToe.board = [
+        [null, null, null],
+        [null, null, null],
+        [null, null, null]
+    ]
 }
 
 function playGame(clickEvent) {
@@ -50,12 +62,12 @@ function playGame(clickEvent) {
         x = clickEvent.target.id[0]
         y = clickEvent.target.id[1]
     
-        if (clickEvent.target.matches('.cell') && (ticTacToe.player_turn % 2 === 0) && (ticTacToe.board[x][y]===null)){
+        if (clickEvent.target.matches('.cell') && (ticTacToe.player_turn % 2 === 0) && (ticTacToe.board[x][y]===null) && (ticTacToe.player_turn)){
             clickEvent.target.innerText = 'X'
             ticTacToe.board[x][y]='X'
             ticTacToe.player_turn++
         }
-        if (clickEvent.target.matches(".cell") && (ticTacToe.player_turn % 2 !== 0) && (ticTacToe.board[x][y]===null)){
+        if (clickEvent.target.matches(".cell") && (ticTacToe.player_turn % 2 !== 0) && (ticTacToe.board[x][y]===null) && (ticTacToe.player_turn)){
             clickEvent.target.innerText = '0'
             ticTacToe.board[x][y]='0'
             ticTacToe.player_turn++
@@ -120,6 +132,7 @@ function addPlayer2(event) {
 }
 
 //board.addEventListener("click", getAxis)
+newGame.addEventListener("submit", startNewGame)
 board.addEventListener("click", playGame)
 player1Submit.addEventListener("submit", addPlayer1)
 player2Submit.addEventListener("submit", addPlayer2)
