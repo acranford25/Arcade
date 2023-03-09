@@ -94,12 +94,15 @@ function getColumn(grid, num){
     return column
 }
 
-/*
-need to get diagonals
-[0][0], [1][1], [2][2]
-[0][2], [1][1], [2][0]
-*/ 
+function getFirstDiagonal(grid){
+    let diagonal = [grid[0][0], grid[1][1], grid[2][2]]
+    return diagonal
+}
 
+function getSecondDiagonal(grid){
+    let diagonal = [grid[0][2], grid[1][1], grid[2][0]]
+    return diagonal
+}
 
 
 
