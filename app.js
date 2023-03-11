@@ -71,12 +71,11 @@ function isTurn(){
 }
 
 function playGame(clickEvent) {
-    isTurn()
     const isGameActive = ticTacToe.player_turn !== null
     if (!isGameActive){
         return ticTacToe.board
     }
-
+    isTurn()
     const isCell = clickEvent.target.matches('.cell')
     if (!isCell){
         return ticTacToe.board
@@ -125,13 +124,9 @@ function getColumn(grid, num){
     return column
 }
 
-const firstDiagonal = [ticTacToe.board[0][0], ticTacToe.board[1][1], ticTacToe.board[2][2]]
-
-
-const secondDiagonal = [ticTacToe.board[0][2], ticTacToe.board[1][1], ticTacToe.board[2][0]]
-
-
 function getWinConditions(grid) {
+    const firstDiagonal = [ticTacToe.board[0][0], ticTacToe.board[1][1], ticTacToe.board[2][2]] 
+    const secondDiagonal = [ticTacToe.board[0][2], ticTacToe.board[1][1], ticTacToe.board[2][0]]
     const sectionsToCheck = [];
     sectionsToCheck.push(firstDiagonal)
     sectionsToCheck.push(secondDiagonal)
@@ -156,7 +151,7 @@ function xWins(){
     return false
 }
 
-function YWins(){
+function yWins(){
     let plays = getWinConditions(ticTacToe.board) 
     for (i=0;i<plays.length;i++){
         let play = plays[i]
@@ -168,10 +163,16 @@ function YWins(){
     return false
 }
 
-function endGame(clickEvent){
+function endGame(){
     let value1 = xWins()
     if (value1){
-        
+        ticTacToe.playerOne.score++
+        ticTacToe.player_turn = null
+    }
+    let value2 = yWins()
+    if (value2){
+        ticTacToe.playerTwo.score++
+        ticTacToe.player_turn = null
     }
 }
 
@@ -196,5 +197,6 @@ function addPlayer2(event) {
 //board.addEventListener("click", getAxis)
 newGame.addEventListener("submit", startNewGame)
 board.addEventListener("click", playGame)
+board.addEventListener("click", endGame)
 player1Submit.addEventListener("submit", addPlayer1)
 player2Submit.addEventListener("submit", addPlayer2)
