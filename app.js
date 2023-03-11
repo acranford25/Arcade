@@ -45,10 +45,12 @@ function startNewGame(event) {
     event.preventDefault()
     resetBoard()
     if (ticTacToe.playerOne.name && ticTacToe.playerTwo.name){
-        ticTacToe.player_turn = 2
+        ticTacToe.player_turn = 0
+        player1.innerText = ticTacToe.playerOne.name + " <"
+        player2.innerText = ticTacToe.playerTwo.name
     }
     else {
-        window.alert("Must submit player names to play game. To play vs computer submit player2 as empty.")
+        window.alert("Must submit player names to play game. To play vs computer submit player2 as empty. Then click New Game")
     }
     return ticTacToe.board = [
         [null, null, null],
@@ -57,24 +59,53 @@ function startNewGame(event) {
     ]
 }
 
-function playGame(clickEvent) {
-    if (clickEvent.target.matches('.cell')){
-        x = clickEvent.target.id[0]
-        y = clickEvent.target.id[1]
-    
-        if (clickEvent.target.matches('.cell') && (ticTacToe.player_turn % 2 === 0) && (ticTacToe.board[x][y]===null) && (ticTacToe.player_turn)){
-            clickEvent.target.innerText = 'X'
-            ticTacToe.board[x][y]='X'
-            ticTacToe.player_turn++
-        }
-        if (clickEvent.target.matches(".cell") && (ticTacToe.player_turn % 2 !== 0) && (ticTacToe.board[x][y]===null) && (ticTacToe.player_turn)){
-            clickEvent.target.innerText = '0'
-            ticTacToe.board[x][y]='0'
-            ticTacToe.player_turn++
-        }
+function isTurn(){
+    if (ticTacToe.player_turn % 2 === 0){
+        player2.innerText += " <"
+        player1.innerText = ticTacToe.playerOne.name
     }
-    return ticTacToe.board
+    if (ticTacToe.player_turn % 2 !== 0){
+        player1.innerText += " <"
+        player2.innerText = ticTacToe.playerTwo.name
+    }
 }
+
+function playGame(clickEvent) {
+    isTurn()
+    const isGameActive = ticTacToe.player_turn !== null
+    if (!isGameActive){
+        return ticTacToe.board
+    }
+
+    const isCell = clickEvent.target.matches('.cell')
+    if (!isCell){
+        return ticTacToe.board
+    }
+
+    x = clickEvent.target.id[0]
+    y = clickEvent.target.id[1]
+    
+    const isCellEmpty = ticTacToe.board[x][y]===null
+    if (!isCellEmpty){
+        return ticTacToe.board
+    }
+    
+    
+    const isTurnEven = ticTacToe.player_turn % 2 === 0
+    if (isTurnEven){
+        clickEvent.target.innerText = 'X'
+        ticTacToe.board[x][y]='X'
+    }
+    
+    const isTurnOdd = ticTacToe.player_turn % 2 !== 0
+    if (isTurnOdd){
+        clickEvent.target.innerText = '0'
+        ticTacToe.board[x][y]='0'
+    }
+
+    ticTacToe.player_turn++
+    return ticTacToe.board
+    }
 
 function getRow(grid,num){
     let row = []
@@ -94,27 +125,24 @@ function getColumn(grid, num){
     return column
 }
 
-function getFirstDiagonal(grid){
-    let diagonal = [grid[0][0], grid[1][1], grid[2][2]]
-    return diagonal
-}
-
-function getSecondDiagonal(grid){
-    let diagonal = [grid[0][2], grid[1][1], grid[2][0]]
-    return diagonal
-}
+const firstDiagonal = [ticTacToe.board[0][0], ticTacToe.board[1][1], ticTacToe.board[2][2]]
 
 
+const secondDiagonal = [ticTacToe.board[0][2], ticTacToe.board[1][1], ticTacToe.board[2][0]]
 
-/*
-function getAxis(clickEvent){
-    if (clickEvent.target.matches('.cell')){
-        x = clickEvent.target.id[0]
-        y = clickEvent.target.id[1]
+
+function getWinConditions(grid) {
+    const sectionsToCheck = [];
+    sectionsToCheck.push(firstDiagonal)
+    sectionsToCheck.push(secondDiagonal)
+    for (let i = 0; i < grid.length; i++) {
+        const currentRow = getRow(grid, i)
+        const currentColumn = getColumn(grid, i)
+        sectionsToCheck.push(currentRow)
+        sectionsToCheck.push(currentColumn)
     }
+    return sectionsToCheck
 }
-*/
-
 
 function addPlayer1(event) {
     event.preventDefault();
