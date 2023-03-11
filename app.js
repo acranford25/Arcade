@@ -94,7 +94,7 @@ function playGame(clickEvent) {
     const isTurnEven = ticTacToe.player_turn % 2 === 0
     if (isTurnEven){
         clickEvent.target.innerText = 'X'
-        ticTacToe.board[x][y]='X'
+        ticTacToe.board[x][y]='x'
     }
     
     const isTurnOdd = ticTacToe.player_turn % 2 !== 0
@@ -142,6 +142,37 @@ function getWinConditions(grid) {
         sectionsToCheck.push(currentColumn)
     }
     return sectionsToCheck
+}
+
+function xWins(){
+    let plays = getWinConditions(ticTacToe.board)
+    for (i=0;i<plays.length;i++){
+        let play = plays[i]
+        let check = ['x', 'x', 'x']
+        if (String(play) === String(check)){
+            return true
+        }
+    }
+    return false
+}
+
+function YWins(){
+    let plays = getWinConditions(ticTacToe.board) 
+    for (i=0;i<plays.length;i++){
+        let play = plays[i]
+        let check = ['0', '0', '0']
+        if (String(play) === String(check)){
+            return true
+        }
+    }
+    return false
+}
+
+function endGame(clickEvent){
+    let value1 = xWins()
+    if (value1){
+        
+    }
 }
 
 function addPlayer1(event) {
