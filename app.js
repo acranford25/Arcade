@@ -29,6 +29,8 @@ const player2Submit = document.querySelector("#player2_submit")
 const player2Input = document.querySelector("#player2_input")
 const player2 = document.querySelector("#player2_name")
 const newGame = document.querySelector("#new_game")
+const player1Score = document.querySelector("#score1Num")
+const player2Score = document.querySelector("#score2Num")
 
 const board = document.querySelector("#board")
 
@@ -76,6 +78,7 @@ function playGame(clickEvent) {
         return ticTacToe.board
     }
     isTurn()
+
     const isCell = clickEvent.target.matches('.cell')
     if (!isCell){
         return ticTacToe.board
@@ -163,16 +166,44 @@ function yWins(){
     return false
 }
 
+function staleMate(grid){
+    for (let i=0; i<grid.length; i++){
+        let currentRow = getRow(grid, i)
+        for (i =0; i< currentRow.length; i++){
+            if (currentRow[i] === null){
+                return false
+            }
+        }
+    }
+    return true
+}
+
 function endGame(){
     let value1 = xWins()
     if (value1){
         ticTacToe.playerOne.score++
         ticTacToe.player_turn = null
+        player1Score.innerText = ticTacToe.playerOne.score
+        ticTacToe.board = [
+            [null, null, null],
+            [null, null, null],
+            [null, null, null]
+        ]
     }
     let value2 = yWins()
     if (value2){
         ticTacToe.playerTwo.score++
         ticTacToe.player_turn = null
+        player2Score.innerText = ticTacToe.playerTwo.score
+        ticTacToe.board = [
+            [null, null, null],
+            [null, null, null],
+            [null, null, null]
+        ]
+    }
+    let value3 = staleMate(ticTacToe.board)
+    if (ticTacToe.player_turn > 8 && !value1 && !value2 && !!value3){
+        window.alert("stalemete")
     }
 }
 
