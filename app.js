@@ -166,16 +166,20 @@ function yWins(){
     return false
 }
 
-function staleMate(grid){
+function isGridFull(grid){
     for (let i=0; i<grid.length; i++){
-        let currentRow = getRow(grid, i)
-        for (i =0; i< currentRow.length; i++){
-            if (currentRow[i] === null){
-                return false
+        let currRow = []
+        for (let j=0; j<grid.length; j++){
+            let currEl = grid[i][j]
+            if (currEl !== null){
+            currRow.push(currEl)
+            }
+            else {
+            return false
             }
         }
-    }
-    return true
+        }
+        return true
 }
 
 function endGame(){
@@ -201,10 +205,12 @@ function endGame(){
             [null, null, null]
         ]
     }
-    let value3 = staleMate(ticTacToe.board)
-    if (ticTacToe.player_turn > 8 && !value1 && !value2 && !!value3){
-        window.alert("stalemete")
+
+    let value3 = isGridFull(ticTacToe.board)
+    if (!!value3 && !value1 && !value2){
+        window.alert("stalemate")
     }
+
 }
 
 function addPlayer1(event) {
