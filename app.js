@@ -77,7 +77,6 @@ function playGame(clickEvent) {
     if (!isGameActive){
         return ticTacToe.board
     }
-    isTurn()
 
     const isCell = clickEvent.target.matches('.cell')
     if (!isCell){
@@ -87,12 +86,11 @@ function playGame(clickEvent) {
     x = clickEvent.target.id[0]
     y = clickEvent.target.id[1]
     
-    const isCellEmpty = ticTacToe.board[x][y]===null
+    const isCellEmpty = ticTacToe.board[x][y] === null
     if (!isCellEmpty){
         return ticTacToe.board
     }
-    
-    
+    isTurn()
     const isTurnEven = ticTacToe.player_turn % 2 === 0
     if (isTurnEven){
         clickEvent.target.innerText = 'X'
@@ -107,7 +105,7 @@ function playGame(clickEvent) {
 
     ticTacToe.player_turn++
     return ticTacToe.board
-    }
+}
 
 function getRow(grid,num){
     let row = []
