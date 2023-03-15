@@ -105,27 +105,7 @@ function playGame(clickEvent) {
         clickEvent.target.innerText = '0'
         ticTacToe.board[x][y]='0'
     }
-    
-    /*setInterval(function () {
-        if ((ticTacToe.player_turn % 2 !== 0) && (ticTacToe.playerTwo.status === false) && isCellEmpty){
-            const randomSquareIndex = Math.floor(Math.random() * squares.length);
-            squares[randomSquareIndex].innerText = '0'
-            x = square.id[0]
-            y = square.id[1]
-            ticTacToe.board[x][y]='0'
-            ticTacToe.player_turn++
-            player1.innerText += " <"
-            player2.innerText = ticTacToe.playerTwo.name
-        }
-    }, 1000);*/
-    
-    /*if ((isTurnOdd) && (ticTacToe.playerTwo.status===false)){
-        setInterval(function () {
-            const randomSquareIndex = Math.floor(Math.random() * squares.length);
-        squares[randomSquareIndex].innerText = '0'
-        ticTacToe.board[x][y]='0'
-    }, 1000)
-}*/
+
     isTurn()
     ticTacToe.player_turn++
     console.log(ticTacToe.board)
@@ -290,6 +270,9 @@ function playComputer(){
 }
 
 setInterval(function () {
+    if (!ticTacToe.gameStatus){
+        return ticTacToe.board
+    }
     if ((ticTacToe.player_turn % 2 !== 0) && (ticTacToe.playerTwo.status === false)){
         const randomSquareIndex = Math.floor(Math.random() * squares.length);
         let currSquare = squares[randomSquareIndex]
@@ -303,6 +286,7 @@ setInterval(function () {
             player2.innerText = ticTacToe.playerTwo.name
         }
     }
+    endGame()
     return ticTacToe.board
 }, 1000);
 
