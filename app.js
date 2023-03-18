@@ -40,6 +40,26 @@ const player2Score = document.querySelector("#score2Num")
 
 const board = document.querySelector("#board")
 
+
+function addPlayer1(event) {
+    event.preventDefault();
+    player1.innerText = player1Input.value + " <"
+    ticTacToe.playerOne.name = player1Input.value
+}
+
+function addPlayer2(event) {
+    event.preventDefault();
+    if (!player2Input.value){
+        player2.innerText = 'CPU'
+        ticTacToe.playerTwo.name = 'CPU'
+    }
+    else {
+        player2.innerText = player2Input.value
+        ticTacToe.playerTwo.name = player2Input.value
+        ticTacToe.playerTwo.status = true
+    }
+}
+
 let x = square.id[0]
 let y = square.id[1]
 
@@ -58,12 +78,12 @@ function startNewGame(event) {
     else {
         window.alert("Must submit player names to play game. To play vs computer submit player2 as empty. Then click New Game")
     }
-    playComputer()
-    return ticTacToe.board = [
+    ticTacToe.board = [
         [null, null, null],
         [null, null, null],
         [null, null, null]
     ]
+    playComputer()
 }
 
 
@@ -140,9 +160,17 @@ function getColumn(grid, num){
 }
 
 function getWinConditions(grid) {
-    const firstDiagonal = [ticTacToe.board[0][0], ticTacToe.board[1][1], ticTacToe.board[2][2]] 
-    const secondDiagonal = [ticTacToe.board[0][2], ticTacToe.board[1][1], ticTacToe.board[2][0]]
     const sectionsToCheck = [];
+    let firstDiagonal = []
+    let secondDiagonal = []
+    for (i = 0, j = 0; i < grid.length, j < grid.length; i++, j++){
+        let currChar = grid[i][j]
+        firstDiagonal.push(currChar)
+    }
+    for (i = 0, j = grid.length-1; i < grid.length, j >= 0; i++, j--){
+        let currChar = grid[i][j]
+        secondDiagonal.push(currChar)
+    }
     sectionsToCheck.push(firstDiagonal)
     sectionsToCheck.push(secondDiagonal)
     for (let i = 0; i < grid.length; i++) {
@@ -223,27 +251,8 @@ function endGame(){
         window.alert("stalemate")
         ticTacToe.gameStatus = false
     }
-
 }
 
-function addPlayer1(event) {
-    event.preventDefault();
-    player1.innerText = player1Input.value + " <"
-    ticTacToe.playerOne.name = player1Input.value
-}
-
-function addPlayer2(event) {
-    event.preventDefault();
-    if (!player2Input.value){
-        player2.innerText = 'CPU'
-        ticTacToe.playerTwo.name = 'CPU'
-    }
-    else {
-        player2.innerText = player2Input.value
-        ticTacToe.playerTwo.name = player2Input.value
-        ticTacToe.playerTwo.status = true
-    }
-}
 
 function playComputer(){
     setInterval(function () {
@@ -269,7 +278,74 @@ function playComputer(){
     }, 3000);
 }
 
+/*function computerSmart(grid){
+    for (let i = 0; i < grid.length; i++){
+        let firstEl = grid[0][i]
+        let secondEl = grid[1][i]
+        let thirdEl = grid[2][i]
+        if (firstEl && firstEl === secondEl && thirdEl === null){
+            ticTacToe.board[i][2] = '0'
+    }
+        if (firstEl && firstEl === thirdEl && secondEl === null){
+            ticTacToe.board[i][1] = '0'
+        }
+        if (!firstEl && secondEl === thirdEl){
+            ticTacToe.board[i][0] = '0'
+        }
+    }
+    for (let i = 0; i < grid.length; i++){
+        let currArr = grid[i]
+        let firstEl = currArr[0]
+        let secondEl = currArr[1]
+        let thirdEl = currArr[2]
+        if (firstEl && firstEl === secondEl && thirdEl === null){
+            ticTacToe.board[i][2] = '0'
+        }
+        if (firstEl && firstEl === thirdEl && secondEl === null){
+            ticTacToe.board[i][1] = '0'
+        }
+        if (!firstEl && secondEl === thirdEl){
+            ticTacToe.board[i][0] = '0'
+        }
+    }
+    let firstEl = grid[0][0]
+        let secondEl = grid[1][1]
+        let thirdEl = grid[2][2]
+        let fourthEl = grid[0][2]
+        let fifthEl = grid[2][0]
+        if (firstEl && firstEl === secondEl && thirdEl === null){
+            grid[2][2] = '0'
+        }
+        if (firstEl && firstEl === thirdEl && secondEl === null){
+            grid[1][1] = '0'
+        }
+        if (!firstEl && secondEl === thirdEl){
+            grid[0][0] = '0'
+        }
+        if (fourthEl && fourthEl === secondEl && fifthEl === null){
+            grid[2][0] = '0'
+        }
+        if (fourthEl && fourthEl === fifthEl && secondEl === null){
+            grid[1][1] = '0'
+        }
+        if (!fourthEl && secondEl === fifthEl){
+            grid[0][2] = '0'
+        }
+    return ticTacToe.board
+}
 
+function renderComputer(grid){
+    let x = 0
+    let y = 0
+    for (i = 0; i < grid.length; i++)
+    for (j = 0; j < grid.length; j++){
+        if (grid[i][j]==='0')
+        x = i
+        y = j
+    }
+    const cell=document.getElementById(`${x}${y}`)
+    cell.innerText='0'
+}*/
 
 //board.addEventListener("click", getAxis)
 newGame.addEventListener("submit", startNewGame)
