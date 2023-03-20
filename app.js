@@ -228,6 +228,7 @@ function endGame(){
         ticTacToe.playerOne.score++
         ticTacToe.gameStatus = false
         player1Score.innerText = ticTacToe.playerOne.score
+        window.alert("player 1 Wins")
         ticTacToe.board = [
             [null, null, null],
             [null, null, null],
@@ -239,13 +240,14 @@ function endGame(){
         ticTacToe.playerTwo.score++
         ticTacToe.gameStatus = false
         player2Score.innerText = ticTacToe.playerTwo.score
+        window.alert("player 2 Wins")
         ticTacToe.board = [
             [null, null, null],
             [null, null, null],
             [null, null, null]
         ]
     }
-
+    
     let value3 = isGridFull(ticTacToe.board)
     if (!!value3 && !value1 && !value2){
         window.alert("stalemate")
@@ -278,18 +280,18 @@ function playComputer(){
     }, 3000);
 }
 
-/*function computerSmart(grid){
+function computerSmart(grid){
     for (let i = 0; i < grid.length; i++){
         let firstEl = grid[0][i]
         let secondEl = grid[1][i]
         let thirdEl = grid[2][i]
         if (firstEl && firstEl === secondEl && thirdEl === null){
             ticTacToe.board[i][2] = '0'
-    }
-        if (firstEl && firstEl === thirdEl && secondEl === null){
+        }
+        else if (firstEl && firstEl === thirdEl && secondEl === null){
             ticTacToe.board[i][1] = '0'
         }
-        if (!firstEl && secondEl === thirdEl){
+        else if (!firstEl && secondEl === thirdEl){
             ticTacToe.board[i][0] = '0'
         }
     }
@@ -301,37 +303,36 @@ function playComputer(){
         if (firstEl && firstEl === secondEl && thirdEl === null){
             ticTacToe.board[i][2] = '0'
         }
-        if (firstEl && firstEl === thirdEl && secondEl === null){
+        else if (firstEl && firstEl === thirdEl && secondEl === null){
             ticTacToe.board[i][1] = '0'
         }
-        if (!firstEl && secondEl === thirdEl){
+        else if (!firstEl && secondEl === thirdEl){
             ticTacToe.board[i][0] = '0'
         }
     }
     let firstEl = grid[0][0]
-        let secondEl = grid[1][1]
-        let thirdEl = grid[2][2]
-        let fourthEl = grid[0][2]
-        let fifthEl = grid[2][0]
-        if (firstEl && firstEl === secondEl && thirdEl === null){
-            grid[2][2] = '0'
-        }
-        if (firstEl && firstEl === thirdEl && secondEl === null){
-            grid[1][1] = '0'
-        }
-        if (!firstEl && secondEl === thirdEl){
-            grid[0][0] = '0'
-        }
-        if (fourthEl && fourthEl === secondEl && fifthEl === null){
-            grid[2][0] = '0'
-        }
-        if (fourthEl && fourthEl === fifthEl && secondEl === null){
-            grid[1][1] = '0'
-        }
-        if (!fourthEl && secondEl === fifthEl){
-            grid[0][2] = '0'
-        }
-    return ticTacToe.board
+    let secondEl = grid[1][1]
+    let thirdEl = grid[2][2]
+    let fourthEl = grid[0][2]
+    let fifthEl = grid[2][0]
+    if (firstEl && firstEl === secondEl && thirdEl === null){
+        grid[2][2] = '0'
+    }
+    else if (firstEl && firstEl === thirdEl && secondEl === null){
+        grid[1][1] = '0'
+    }
+    else if (!firstEl && secondEl === thirdEl){
+        grid[0][0] = '0'
+    }
+    else if (fourthEl && fourthEl === secondEl && fifthEl === null){
+        grid[2][0] = '0'
+    }
+    else if (fourthEl && fourthEl === fifthEl && secondEl === null){
+        grid[1][1] = '0'
+    }
+    else if (!fourthEl && secondEl === fifthEl){
+        grid[0][2] = '0'
+    }
 }
 
 function renderComputer(grid){
@@ -342,10 +343,15 @@ function renderComputer(grid){
         if (grid[i][j]==='0')
         x = i
         y = j
+        const cell=document.getElementById(`${x}${y}`)
+        cell.innerText='0'
     }
-    const cell=document.getElementById(`${x}${y}`)
-    cell.innerText='0'
-}*/
+    ticTacToe.player_turn++
+    player1.innerText += " <"
+    player2.innerText = ticTacToe.playerTwo.name
+    ticTacToe.playerOne.turn = true
+    ticTacToe.playerTwo.turn = false
+}
 
 //board.addEventListener("click", getAxis)
 newGame.addEventListener("submit", startNewGame)
